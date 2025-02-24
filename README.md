@@ -20,3 +20,9 @@ https://www.amazon.de/dp/B0B778L7T3?ref=ppx_yo2ov_dt_b_fed_asin_title
 AS5600 Pin Out:
 
 ![image](https://github.com/user-attachments/assets/acef8033-916b-49b6-8074-f542889a5aec)
+
+
+Scripts:
+
+1. KeyStateTest.ino > Test to check connection with ESP32
+2. i2cCheck.ino > Test to check i2c connection
