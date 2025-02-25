@@ -24,6 +24,7 @@ AS5600 Pin Out:
 Update to pins:
 
 SDA (Data Line) → GPIO 18
+
 SCL (Clock Line) → GPIO 23
 
 
