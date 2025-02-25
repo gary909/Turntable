@@ -4,7 +4,7 @@ Proof of concept to see if I can create a scratch turntable using an ESP-32.
 
 Set up so far:
 
-![image](https://github.com/user-attachments/assets/4c848ccb-5c22-4d47-b0ec-797f203da7e9  | width=100)
+![image](https://github.com/user-attachments/assets/4c848ccb-5c22-4d47-b0ec-797f203da7e9 width="200")
 ________________________________________________________________________________________________
 
 ________________________________________________________________________________________________
