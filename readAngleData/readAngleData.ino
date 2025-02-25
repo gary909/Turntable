@@ -33,7 +33,7 @@
 
 void setup() {
     Serial.begin(115200);
-    Wire.begin(21, 22); // ESP32 I2C: SDA=GPIO 21, SCL=GPIO 22
+    Wire.begin(18, 23); // ESP32 I2C: SDA=GPIO 21 (18), SCL=GPIO 22 (23)
     Serial.println("\nAS5600 Angle Reader Initialized...");
 }
 

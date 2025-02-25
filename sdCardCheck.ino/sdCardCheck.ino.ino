@@ -1,34 +1,55 @@
-/*
+/* 
+ ________  ________          ________  ________  ________  ________     
+|\   ____\|\   ___ \        |\   ____\|\   __  \|\   __  \|\   ___ \    
+\ \  \___|\ \  \_|\ \       \ \  \___|\ \  \|\  \ \  \|\  \ \  \_|\ \   
+ \ \_____  \ \  \ \\ \       \ \  \    \ \   __  \ \   _  _\ \  \ \\ \  
+  \|____|\  \ \  \_\\ \       \ \  \____\ \  \ \  \ \  \\  \\ \  \_\\ \ 
+    ____\_\  \ \_______\       \ \_______\ \__\ \__\ \__\\ _\\ \_______\
+   |\_________\|_______|        \|_______|\|__|\|__|\|__|\|__|\|_______|
+   \|_________|                                                         
+                                                                        
+************************************************************************
+SD CARD CHECK
+This checks if we have correct access to the ESP32 audio dev kits SD 
+card reader.
 
-Test to see sd card is communicating
+Changes to Pins:
 
+SDA (Data Line) → GPIO 18
+SCL (Clock Line) → GPIO 23
+
+Once uploaded, open serial monitor and check message.  No message?
+Hit the reset button.
+************************************************************************
 */
 
 #include <SPI.h>
 #include <SD.h>
-#include "Wire.h"  // Include I2C for ES8388 Codec
 
-// ✅ Correct SD Card SPI Pins for ESP32-A1S
 #define SD_CS  13
 #define SD_MOSI 15
 #define SD_MISO 2
 #define SD_SCK  14
 
+SPIClass spi = SPIClass(VSPI); // Define SPI instance for SD card
+
 void setup() {
     Serial.begin(115200);
-    Serial.println("\nInitializing SD card...");
+    delay(2000);  // Allow Serial Monitor to start
+    Serial.println("\n🛠️ ESP32 Booted. Starting SD Card Test...");
 
-    // 🛠️ Fix I2C communication for ES8388 codec
-    Wire.begin(18, 23); // Correct I2C pins for ESP32 Audio Kit ES8388
+    // Setup SPI with correct SD card pins
+    spi.begin(SD_SCK, SD_MISO, SD_MOSI, SD_CS);
 
-    // 🛠️ Initialize SD Card with correct SPI pins
-    if (!SD.begin(SD_CS, SPI, 4000000, "/sd", 5)) {
+    // Try initializing SD card in SPI mode
+    if (!SD.begin(SD_CS, spi, 4000000, "/sd", 5)) {
         Serial.println("⚠️ ERROR: SD Card initialization failed!");
         return;
     }
-    Serial.println("✅ SD Card initialized successfully!");
 
-    // Check for scratch.wav file
+    Serial.println("✅ SD Card initialized successfully!");
+    
+    // Check if the file exists
     Serial.println("Checking for scratch.wav...");
     if (!SD.exists("/scratch.wav")) {
         Serial.println("⚠️ ERROR: File 'scratch.wav' not found on SD card!");
@@ -36,21 +57,8 @@ void setup() {
     }
 
     Serial.println("✅ 'scratch.wav' exists on SD card!");
-    Serial.println("Attempting to open file...");
-
-    File audioFile = SD.open("/scratch.wav");
-    if (!audioFile) {
-        Serial.println("⚠️ ERROR: Unable to open 'scratch.wav'!");
-        return;
-    }
-
-    Serial.println("✅ Successfully opened 'scratch.wav'!");
-    Serial.println("File size: " + String(audioFile.size()) + " bytes");
-
-    audioFile.close();
-    Serial.println("✅ File test complete. Ready for playback!");
 }
 
 void loop() {
-    // Nothing in loop, this is just a test
+    // Nothing in loop, just testing SD card initialization
 }
