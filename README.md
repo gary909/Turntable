@@ -27,4 +27,5 @@ Scripts:
 1. KeyStateTest.ino > Test to check connection with ESP32
 2. i2cCheck.ino > Test to check i2c connection
 3. readAngleData.ino > Test to Read the AS5600 Angle data and return the results in serial monitor.
-4. AudioPlaybackTest.ino > Test to playback audio file from SD card
+4. sdCardCheck.ino > Test to see sd card is communicating
+5. AudioPlaybackTest.ino > Test to playback audio file from SD card
