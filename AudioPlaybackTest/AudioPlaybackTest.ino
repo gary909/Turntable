@@ -28,45 +28,53 @@ File location: /scratch.wav (root directory, not inside a folder)
 #include "AudioTools.h"
 #include "AudioTools/AudioCodecs/CodecWAV.h"
 
-const int chipSelect = 13; // SD Card CS pin (modify if needed)
+// ✅ Correct SD Card SPI Pins for ESP32-A1S
+#define SD_CS  13
+#define SD_MOSI 15
+#define SD_MISO 2
+#define SD_SCK  14
 
-// Audio Objects
-I2SStream i2s;  // I2S Output for ESP32 Audio Kit
-EncodedAudioStream decoder(&i2s, new WAVDecoder()); // WAV Decoder
-StreamCopy copier; 
+SPIClass spi = SPIClass(VSPI);  // Define SPI instance for SD card
+
+// 🎵 Audio Objects
+I2SStream i2s;
+EncodedAudioStream decoder(&i2s, new WAVDecoder());
+StreamCopy copier;
 File audioFile;
 
-void setup(){
+void setup() {
     Serial.begin(115200);
-    AudioLogger::instance().begin(Serial);
+    delay(2000);
+    Serial.println("\n🛠️ ESP32 Booted. Starting WAV Playback Test...");
 
-    // Initialize SD Card
-    if (!SD.begin(chipSelect)) {
-        Serial.println("SD Card initialization failed!");
+    // Initialize SPI with correct SD card pins
+    spi.begin(SD_SCK, SD_MISO, SD_MOSI, SD_CS);
+
+    // ✅ Initialize SD Card
+    if (!SD.begin(SD_CS, spi, 4000000, "/sd", 5)) {
+        Serial.println("⚠️ ERROR: SD Card initialization failed!");
         return;
     }
-    Serial.println("SD Card initialized.");
+    Serial.println("✅ SD Card initialized!");
 
-    // Open the WAV file
+    // ✅ Open WAV file
     audioFile = SD.open("/scratch.wav");
     if (!audioFile) {
-        Serial.println("Failed to open scratch.wav!");
+        Serial.println("⚠️ ERROR: Unable to open 'scratch.wav'!");
         return;
     }
-    Serial.println("Playing scratch.wav...");
+    Serial.println("✅ Playing scratch.wav...");
 
-    // Setup I2S Output
+    // 🎵 Configure I2S Output
     auto config = i2s.defaultConfig(TX_MODE);
     i2s.begin(config);
 
-    // Setup decoder
+    // 🎵 Start decoding and playback
     decoder.begin();
-
-    // Begin playback
     copier.begin(decoder, audioFile);
 }
 
-void loop(){
+void loop() {
     if (!copier.copy()) {
         Serial.println("Playback finished.");
         delay(5000);
