@@ -1,5 +1,13 @@
 /*
-
+                    _ _         _______        _   
+     /\            | (_)       |__   __|      | |  
+    /  \  _   _  __| |_  ___      | | ___  ___| |_ 
+   / /\ \| | | |/ _` | |/ _ \     | |/ _ \/ __| __|
+  / ____ \ |_| | (_| | | (_) |    | |  __/\__ \ |_ 
+ /_/    \_\__,_|\__,_|_|\___/     |_|\___||___/\__|
+                                                   
+                                                   
+********************************************************************
 install 'Arduino Audio Tools' library in Arduino IDE<
 https://github.com/pschatzmann/arduino-audio-tools
 download the library as zip and call include Library -> zip library
@@ -12,7 +20,7 @@ Bitrate: 16-bit PCM (recommended for ESP32)
 Sample rate: 22kHz
 Mono
 File location: /scratch.wav (root directory, not inside a folder)
-
+*********************************************************************
 */
 
 #include <SPI.h>
