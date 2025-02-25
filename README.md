@@ -21,6 +21,11 @@ AS5600 Pin Out:
 
 ![image](https://github.com/user-attachments/assets/acef8033-916b-49b6-8074-f542889a5aec)
 
+Update to pins:
+
+SDA (Data Line) → GPIO 18
+SCL (Clock Line) → GPIO 23
+
 
 Scripts:
 
