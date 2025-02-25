@@ -24,7 +24,7 @@ Found I2C device at 0x36
 
 void setup() {
     Serial.begin(115200);
-    Wire.begin(21, 22); // SDA, SCL for ESP32
+    Wire.begin(18, 23); // SDA, SCL for ESP32
     Serial.println("\nI2C Scanner Running...");
 }
 
