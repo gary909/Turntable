@@ -1,6 +1,6 @@
 "# Turntable" 
 ________________________________________________________________________________________________
-Proof of concept to see if I can create a scratch turntable using an ESP-32.
+Proof of concept to see if I can create a scratch turntable using an ESP-32 (ESP32-A1S).
 
 Set up so far:
 
